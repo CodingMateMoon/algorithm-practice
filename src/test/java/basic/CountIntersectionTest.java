@@ -1,9 +1,11 @@
 package basic;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CountIntersectionTest {
@@ -13,21 +15,23 @@ public class CountIntersectionTest {
         // given
         int line[][] = {{0, 1, -1}, {1, 0, -1}, {1, 0, 1}};
 
-        List<Point> points = new ArrayList<>();
-        // when
-        for (int i = 0; i < line.length - 1; i++) {
-            for (int j = i + 1; j < line.length; j++) {
-                if (CountIntersection.checkIntersection(line[i], line[j])) {
-                    points.add(CountIntersection.createPoint(line[i], line[j]));
-                }
-            }
-        }
 
-        // 정렬 후 양 끝 y축 차를 구해서
-        for (Point point : points) {
-            System.out.println(point);
-        }
-        // then
+
+        // 출력할 배열에 대해 y축 최소값과 최대값이 차로 세로 길이, x축 최소값과 최대값의 차로 가로 길이 구하기
+        String[] result = CountIntersection.solution(line);
+        Arrays.stream(result).forEach(row -> System.out.println(row));
     }
+
+    @Test
+    @DisplayName("test")
+    void test2() {
+        // given
+        int line[][] = {{2, -1, 4}, {-2, -1, 4}, {0, -1, 1}, {5, -8, -12}, {5, 8, 12}};
+
+        // 출력할 배열에 대해 y축 최소값과 최대값이 차로 세로 길이, x축 최소값과 최대값의 차로 가로 길이 구하기
+        String[] result = CountIntersection.solution(line);
+        Arrays.stream(result).forEach(row -> System.out.println(row));
+    }
+
 
 }
