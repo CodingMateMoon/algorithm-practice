@@ -23,7 +23,7 @@ class CountIntersection {
                     "}";
         }
     }
-공
+
     public static Point createPoint(int arr1[], int arr2[]) {
 
         long divide = ((long)arr1[0] * (long)arr2[1] - (long)arr1[1] * (long)arr2[0]);
