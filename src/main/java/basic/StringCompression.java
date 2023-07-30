@@ -17,21 +17,21 @@ public class StringCompression {
 
         int min = Integer.MAX_VALUE;
         int unit = 1;
-        int maxUnit = elements.length / 2;
+        int maxUnit = elements.length ;
         for (int i = unit; i <= maxUnit; i++) {
-
-            String compressedString = compressString(s, unit);
+            String compressedString = compressString(s, i);
+            min = Math.min(compressedString.length(), min);
         }
-        return 0;
+        return min;
     }
 
     private static String compressString(String s, int unit) {
 
-
         String last = "";
         int index = 0;
-        int count = 0;
+        int count = 1;
         StringBuilder sb = new StringBuilder();
+
         for (String token : split(s, unit)) {
             if (index == 0) {
                 last = token;
@@ -49,10 +49,13 @@ public class StringCompression {
             }
             sb.append(last);
             last = token;
-            count = 0;
-
-
+            count = 1;
         }
+        if (count > 1) {
+            sb.append(count);
+        }
+        sb.append(last);
+        return sb.toString();
     }
 
     private static List<String> split(String s, int unit) {
