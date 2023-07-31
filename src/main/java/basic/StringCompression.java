@@ -17,7 +17,7 @@ public class StringCompression {
 
         int min = Integer.MAX_VALUE;
         int unit = 1;
-        int maxUnit = elements.length ;
+        int maxUnit = elements.length / 2 + 1;
         for (int i = unit; i <= maxUnit; i++) {
             String compressedString = compressString(s, i);
             min = Math.min(compressedString.length(), min);
@@ -33,12 +33,6 @@ public class StringCompression {
         StringBuilder sb = new StringBuilder();
 
         for (String token : split(s, unit)) {
-            if (index == 0) {
-                last = token;
-                index++;
-                continue;
-            }
-
             if (token.equals(last)) {
                 count++;
                 continue;
