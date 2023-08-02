@@ -7,7 +7,7 @@ public class 이진변환_반복하기 {
     return new int[]{convertCount, removeCount}
 
      */
-    public static int[] solution(String s) {
+    public static int[] solution_first(String s) {
 
         int length = 0;
         int removeCount = 0;
@@ -28,6 +28,32 @@ public class 이진변환_반복하기 {
         }
 
         return new int[]{convertCount, removeCount};
+    }
+
+    public static int[] solution(String s) {
+
+        int length = 0;
+        int removeCount = 0;
+        int convertCount = 0;
+        char[] input = s.toCharArray();
+        while (length != 1){
+            int zeros = countZeros(s);
+            removeCount += zeros;
+            length = s.length() - zeros;
+            s = Integer.toString(length, 2);
+            convertCount++;
+        }
+
+        return new int[]{convertCount, removeCount};
+    }
+
+    private static int countZeros(String s) {
+        int zeros = 0;
+        for (char c : s.toCharArray()) {
+            if (c == '0')
+                zeros++;
+        }
+        return zeros;
     }
 
 }
