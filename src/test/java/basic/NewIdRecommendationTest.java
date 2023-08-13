@@ -29,7 +29,30 @@ class NewIdRecommendationTest {
     }
 
     class NewIdRecommendation {
+
         public static String solution(String newId) {
+
+            String answer = new Id(newId).toLowerCase()
+                    .removeSpecificCharacter()
+                    .replacePeriodAsOne()
+                    .removeFirstOrLastPeriod()
+                    .replaceEmptyToA()
+                    .notGreaterThan16()
+                    .greaterThan2();
+
+
+        }
+
+        static class Id{
+
+            private String id;
+            public Id(String newId) {
+                this.id = newId;
+            }
+        }
+
+
+        public static String solution_1(String newId) {
             StringBuilder sb = new StringBuilder();
 
             for (char c : newId.toCharArray()) {
