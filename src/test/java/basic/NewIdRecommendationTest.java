@@ -40,7 +40,7 @@ class NewIdRecommendationTest {
                     .notGreaterThan16()
                     .greaterThan2();
 
-
+            return null;
         }
 
         static class Id{
@@ -48,6 +48,41 @@ class NewIdRecommendationTest {
             private String id;
             public Id(String newId) {
                 this.id = newId;
+            }
+
+            public Id toLowerCase() {
+                this.id = this.id.toLowerCase();
+                return this;
+            }
+
+            public Id removeSpecificCharacter() {
+
+                this.id = this.id.replaceAll("[^a-z0-9_.-]", "");
+//                this.id = this.id.replaceAll("[^a-z0-9\\-_.]", "");
+                return this;
+
+            }
+
+            public Id replacePeriodAsOne() {
+                this.id = this.id.replaceAll("\\.{2,}", ".");
+                System.out.println(id);
+                return null;
+            }
+
+            public Id removeFirstOrLastPeriod() {
+                return null;
+            }
+
+            public Id replaceEmptyToA() {
+                return null;
+            }
+
+            public Id notGreaterThan16() {
+                return null;
+            }
+
+            public String greaterThan2() {
+                return null;
             }
         }
 
