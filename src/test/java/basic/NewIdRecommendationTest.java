@@ -40,7 +40,7 @@ class NewIdRecommendationTest {
                     .notGreaterThan16()
                     .greaterThan2();
 
-            return null;
+            return answer;
         }
 
         static class Id{
@@ -64,25 +64,37 @@ class NewIdRecommendationTest {
             }
 
             public Id replacePeriodAsOne() {
-                this.id = this.id.replaceAll("\\.{2,}", ".");
-                System.out.println(id);
-                return null;
+//                this.id = this.id.replaceAll("\\.{2,}", ".");
+                this.id = this.id.replaceAll("[.]{2,}", ".");
+                return this;
             }
 
             public Id removeFirstOrLastPeriod() {
-                return null;
+//                this.id = this.id.replaceAll("^\\.|\\.$", "");
+                this.id = this.id.replaceAll("^[.]|[.]$", "");
+                return this;
             }
 
             public Id replaceEmptyToA() {
-                return null;
+                /*if (this.id.isEmpty()) {
+                    this.id = "a";
+                }*/
+                this.id = this.id.isEmpty() ? "a" : this.id;
+                return this;
             }
 
             public Id notGreaterThan16() {
-                return null;
+                if (16 <= this.id.length()) {
+                    this.id = this.id.substring(0, 15).replaceAll("\\.$", "");
+                }
+                return this;
             }
 
             public String greaterThan2() {
-                return null;
+                while (this.id.length() <= 2) {
+                    this.id += this.id.charAt(this.id.length() - 1);
+                }
+                return this.id;
             }
         }
 
