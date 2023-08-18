@@ -16,64 +16,50 @@ public class CompressQuadtreeAndCountValuesTest {
         상태 (n, n)
          */
         // given
-        Assertions.assertThat(CompressQuadtreeAndCountValues.solution(new int[][]{{1,1,0,0},{1,0,0,0},{1,0,0,1},{1,1,1,1}})).isEqualTo(new int[]{4, 9});
-        Assertions.assertThat(CompressQuadtreeAndCountValues.solution(new int[][]{{1,1,1,1,1,1,1,1},{0,1,1,1,1,1,1,1},{0,0,0,0,1,1,1,1},{0,1,0,0,1,1,1,1},{0,0,0,0,0,0,1,1},{0,0,0,0,0,0,0,1},{0,0,0,0,1,0,0,1},{0,0,0,0,1,1,1,1}})).isEqualTo(new int[]{10, 15});
+        Assertions.assertThat(new CompressQuadtreeAndCountValues().solution(new int[][]{{1,1,0,0},{1,0,0,0},{1,0,0,1},{1,1,1,1}})).isEqualTo(new int[]{4, 9});
+        Assertions.assertThat(new CompressQuadtreeAndCountValues().solution(new int[][]{{1,1,1,1,1,1,1,1},{0,1,1,1,1,1,1,1},{0,0,0,0,1,1,1,1},{0,1,0,0,1,1,1,1},{0,0,0,0,0,0,1,1},{0,0,0,0,0,0,0,1},{0,0,0,0,1,0,0,1},{0,0,0,0,1,1,1,1}})).isEqualTo(new int[]{10, 15});
         // expected
     }
 
     private static class CompressQuadtreeAndCountValues {
-        public static int[] solution(int[][] arr) {
+        public  int[] solution(int[][] arr) {
+            Count answer = calculateQuadtreeValue(arr, arr.length, 0, 0);
 
-            return new int[0];
+            return new int[]{answer.zero,answer.one};
         }
 
-        public static int[] calculateQuadtreeValue(int[][] arr, int n, int offsetX, int offsetY) {
+        public  Count calculateQuadtreeValue(int[][] arr, int length, int offsetX, int offsetY) {
 
-            int length = 1;
-            int zeroCount = 0;
-            int oneCount = 0;
+            int nextLength = length / 2;
 
-            for (int i = 0; i < n; i++) {
-                length *= 2;
-            }
-
-            int standardNumber = -1;
-            boolean isCompressed = true;
-            for (int y = 0; y < length / 2; y++) {
-                for (int x = 0; x < length / 2; x++) {
-                    if (y == 0 && x == 0) {
-                        standardNumber = arr[y][x];
-                        continue;
-                    }
-                    if (standardNumber != arr[y][x]) {
-                        isCompressed = false;
-                        break;
+            for (int y = offsetY; y < offsetY + length; y++) {
+                for (int x = offsetX; x < offsetX + length; x++) {
+                    if (arr[offsetY][offsetX] != arr[y][x]) {
+                        return calculateQuadtreeValue(arr, nextLength, offsetX, offsetY)
+                                .plus(calculateQuadtreeValue(arr, nextLength, offsetX + nextLength, offsetY))
+                                .plus(calculateQuadtreeValue(arr, nextLength, offsetX, offsetY + nextLength))
+                                .plus(calculateQuadtreeValue(arr, nextLength, offsetX + nextLength, offsetY + nextLength));
                     }
                 }
             }
 
-            if (isCompressed) {
-                if (standardNumber == 0) {
-                    zeroCount++;
-                } else {
-                    oneCount++;
-                }
+            if (arr[offsetY][offsetX] == 0) {
+                return new Count(1, 0);
             }
-
-            if (n == 1) {
-                return new int[]{zeroCount, oneCount};
-            }
-
-            return new int[]{0,0};
+            return new Count(0, 1);
         }
 
-        public class Count {
+        public static class Count {
             final int zero;
             final int one;
 
             public Count(int zero, int one) {
                 this.zero = zero;
                 this.one = one;
+            }
+
+            public Count plus(Count other) {
+                return new Count(this.zero + other.zero, this.one + other.one);
             }
         }
 
