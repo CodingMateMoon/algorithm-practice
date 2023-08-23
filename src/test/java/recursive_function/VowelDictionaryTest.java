@@ -34,8 +34,20 @@ public class VowelDictionaryTest {
     private static class VowelDictionary {
 
         static final char[] vowels = {'A', 'E', 'I', 'O', 'U'};
-
         public static int solution(String word) {
+            int answer = 0, per = 5 + power(5, 2) + power(5, 3) + power(5, 4) + power(5, 5);
+            for(String s : word.split("")) answer += "AEIOU".indexOf(s) * (per /= 5) + 1;
+            return answer;
+        }
+
+        public static int power(int n, int m) {
+            if (n == 0) return 1;
+            if (m == 0) return 1;
+            if (n == 1) return 1;
+            return n * power(n, m - 1);
+        }
+
+        public static int solution_1(String word) {
             List<String> words = new ArrayList<>();
             getWords("", words);
             return words.indexOf(word);
