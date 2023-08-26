@@ -28,11 +28,20 @@ public class ExamTest {
         static final int[][] persons = new int[][]{{1, 2, 3, 4, 5}, {2, 1, 2, 3, 2, 4, 2, 5}, {3, 3, 1, 1, 2, 2, 4, 4, 5, 5}};
 
         public static int[] solution(int[] answers) {
-            int matchCount = Integer.MIN_VALUE;
+            int max = Integer.MIN_VALUE;
+            int[] scores = new int[3];
             for (int i = 0; i < 3; i++) {
+                int matchCount = 0;
                 int repeatLength = persons[i].length;
-                System.out.println("repeatLength : " + repeatLength);
+                for (int j = 0; j < answers.length; j++) {
+                    int index = j % repeatLength;
+                    if (persons[i][index] == answers[j]) {
+                        matchCount++;
+                    }
+                }
+                scores[i] = matchCount;
             }
+            
             return new int[0];
         }
     }
