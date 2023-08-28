@@ -29,7 +29,7 @@ public class ExamTest {
 
         static final int[][] persons = new int[][]{{1, 2, 3, 4, 5}, {2, 1, 2, 3, 2, 4, 2, 5}, {3, 3, 1, 1, 2, 2, 4, 4, 5, 5}};
 
-        public static int[] solution(int[] answers) {
+        public static int[] solution_1(int[] answers) {
             int[] scores = new int[3];
             List<Integer> answer = new ArrayList<>();
             for (int i = 0; i < 3; i++) {
@@ -62,6 +62,17 @@ public class ExamTest {
             }
 
             return result;
+        }
+
+        public static int[] solution(int[] answers) {
+            int[] scores = new int[3];
+
+            for (int answer = 0; answer < answers.length; answer++) {
+
+                for (int person = 0; person < 3; person++) {
+                    
+                }
+            }
         }
     }
 }
