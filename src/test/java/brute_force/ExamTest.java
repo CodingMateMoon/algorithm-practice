@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class ExamTest {
     //https://school.programmers.co.kr/learn/courses/30/lessons/42840
@@ -67,12 +68,28 @@ public class ExamTest {
         public static int[] solution(int[] answers) {
             int[] scores = new int[3];
 
-            for (int answer = 0; answer < answers.length; answer++) {
+            int max = 0;
+            for (int index = 0; index < answers.length; index++) {
 
                 for (int person = 0; person < 3; person++) {
-                    
+                    int picked = getPicked(person, index);
+
+                    if (answers[index] == picked) {
+                        if (++scores[person] > max) {
+                            max = scores[person];
+                        }
+                    }
                 }
             }
+
+            final int finalMax = max;
+            return IntStream.range(0, 3).filter(i -> scores[i] == finalMax).map(i -> i + 1).toArray();
+        }
+
+        private static int getPicked(int person, int answer) {
+            int[] rule = persons[person];
+            int index = answer % rule.length;
+            return rule[index];
         }
     }
 }
