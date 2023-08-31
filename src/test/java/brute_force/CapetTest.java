@@ -13,7 +13,7 @@ public class CapetTest {
         8 <= brown <= 5000
         1 <= yellow <= 2000000
         세로 <= 가로
-        세로 2 이상, 가로 2 이상
+        세로 3 이상, 가로 3 이상
         10 + 2 = 12 = 4 * 3
         (4 + 3) * 2 - 4 = 10 (brown)
         8 + 1 = 9 = 3 * 3
@@ -30,6 +30,10 @@ public class CapetTest {
         ㅁㅇㅁ
         ㅁㅁㅁ
 
+        2(width + height) - 4 = brown
+        width + height = (brown + 4) / 2
+        3이상 (brown + yellow)의 약수
+        => (brown + yellow)에 대해 3이상의 약수이면서 두 수의 합이 (brown + 4) / 2를 만족하는 경우
         (24, 24)-> (8,6)
         ㅁㅁㅁㅁㅁㅁ
         ㅁㅇㅇㅇㅇㅁ
