@@ -33,7 +33,7 @@ public class CapetTest {
         2(width + height) - 4 = brown
         width + height = (brown + 4) / 2
         3이상 (brown + yellow)의 약수
-        => (brown + yellow)에 대해 3이상의 약수이면서 두 수의 합이 (brown + 4) / 2를 만족하는 경우
+        => (brown + yellow)에 대해 3이상의 약수이면서 두 수의 합(제수, 피제수)이 (brown + 4) / 2를 만족하는 경우
         (24, 24)-> (8,6)
         ㅁㅁㅁㅁㅁㅁ
         ㅁㅇㅇㅇㅇㅁ
@@ -50,6 +50,15 @@ public class CapetTest {
     private static class Capet {
         public static int[] solution(int brown, int yellow) {
 
+            int area = brown + yellow;
+            for (int divisor = 3; divisor < area / 2; divisor++) {
+                if (area % divisor == 0) {
+                    int quotient = area / divisor;
+                    if ((divisor + quotient) == (brown + 4) / 2) {
+                        return new int[]{quotient, divisor};
+                    }
+                }
+            }
             return new int[0];
         }
     }
