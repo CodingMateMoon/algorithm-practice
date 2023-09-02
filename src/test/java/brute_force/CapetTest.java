@@ -48,7 +48,7 @@ public class CapetTest {
     }
 
     private static class Capet {
-        public static int[] solution(int brown, int yellow) {
+        public static int[] solution_1(int brown, int yellow) {
 
             int area = brown + yellow;
             for (int divisor = 3; divisor < area / 2; divisor++) {
@@ -60,6 +60,26 @@ public class CapetTest {
                 }
             }
             return new int[0];
+        }
+
+        /*
+
+         */
+        public static int[] solution(int brown, int yellow) {
+
+            for (int width = 3; width < 5000; width++) {
+                for (int height = 0; height <= width; height++) {
+
+                    int boundary = (width + height - 2) * 2;
+                    int inside = width * height - boundary;
+
+                    if (brown == boundary && yellow == inside) {
+                        return new int[]{width, height};
+                    }
+                }
+
+            }
+            return null;
         }
     }
 }
