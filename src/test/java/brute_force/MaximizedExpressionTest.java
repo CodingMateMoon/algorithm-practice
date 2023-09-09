@@ -4,6 +4,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MaximizedExpressionTest {
     /*
     https://school.programmers.co.kr/learn/courses/30/lessons/67257
@@ -47,6 +50,33 @@ public class MaximizedExpressionTest {
 
     private static class MaximizedExpression {
         public static long solution(String s) {
+            List<String> operands = new ArrayList<>();
+            List<Character> operations = new ArrayList<>();
+            int endOffset = -1;
+            for (int i = 0; i < s.length(); i++) {
+                char c = s.charAt(i);
+                if (c == '*' || c == '+' || c == '-') {
+                    if (endOffset < 0) {
+
+                        operands.add(s.substring(0, i));
+                        operations.add(c);
+                        endOffset = i + 1;
+                        continue;
+                    }
+                    operands.add(s.substring(endOffset, i));
+                    operations.add(c);
+                    endOffset = i + 1;
+                }
+            }
+            operands.add(s.substring(endOffset));
+
+            for (String operand : operands) {
+                System.out.println("operands : " + operand);
+            }
+
+            for (Character operation : operations) {
+                System.out.println("operations : " + operation);
+            }
 
             return 0;
         }
