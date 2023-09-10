@@ -5,7 +5,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MaximizedExpressionTest {
     /*
@@ -25,14 +27,14 @@ public class MaximizedExpressionTest {
     int[] numbers = {100, 200, 300, 500, 20}
     char[] operations = {'-', '*', '-', '+'}
     * + -
-    우선 순위
+    우선 순위 3!에 대해 각각 계산
     0 1 2
     0 2 1
     1 0 2
     1 2 0
     2 0 1
     2 1 0
-    
+
     int[] priorities = {0, 1, 2}
     0번째 연산자 -, 1번째 연산자 * 중 우선 순위
     3 <= expression.length <= 100
@@ -49,9 +51,13 @@ public class MaximizedExpressionTest {
     }
 
     private static class MaximizedExpression {
+
+        static final int[][] cases = {{0, 1, 2}, {0, 2, 1}, {1, 0, 2}, {1, 2, 0}, {2, 0, 1}, {2, 1, 0}};
         public static long solution(String s) {
             List<String> operands = new ArrayList<>();
             List<Character> operations = new ArrayList<>();
+
+            Map<Character, Integer> priorities = new HashMap<>();
             int endOffset = -1;
             for (int i = 0; i < s.length(); i++) {
                 char c = s.charAt(i);
@@ -70,15 +76,28 @@ public class MaximizedExpressionTest {
             }
             operands.add(s.substring(endOffset));
 
-            for (String operand : operands) {
-                System.out.println("operands : " + operand);
-            }
+            for (int pCase = 0; pCase < cases.length; pCase++) {
+                setPriority(cases, priorities, pCase);
 
-            for (Character operation : operations) {
-                System.out.println("operations : " + operation);
             }
 
             return 0;
+        }
+
+        private static void setPriority(int[][] cases, Map<Character, Integer> priorities, int pCase) {
+            for (int element = 0; element < 3; element++) {
+                switch(element){
+                    case 0:
+                        priorities.put('*', cases[pCase][element]);
+                        break;
+                    case 1:
+                        priorities.put('+', cases[pCase][element]);
+                        break;
+                    case 2:
+                        priorities.put('-', cases[pCase][element]);
+                        break;
+                }
+            }
         }
     }
 }
