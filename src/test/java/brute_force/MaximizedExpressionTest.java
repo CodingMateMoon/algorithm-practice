@@ -78,7 +78,12 @@ public class MaximizedExpressionTest {
 
             for (int pCase = 0; pCase < cases.length; pCase++) {
                 setPriority(cases, priorities, pCase);
+                // 연산자 i, i+1 비교 후 i가 우선순위에서 더 큰 경우 i+1 연산자 좌우 피연산자에 대해 연산
+                for (int operationIndex = 0; operationIndex < operations.size() - 1; operationIndex++) {
+                    for (int comparedIndex = operationIndex + 1; comparedIndex < operations.size(); comparedIndex++) {
 
+                    }
+                }
             }
 
             return 0;
