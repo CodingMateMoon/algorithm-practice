@@ -13,11 +13,15 @@ public class MaximizedExpressionTest {
     /*
     https://school.programmers.co.kr/learn/courses/30/lessons/67257
     "100-200*300-500+20"	60420 // * > + > - 로 연산자 우선순위를 정한다면 수식의 결괏값은 -60420
+    피연산자 5개, 연산자 4개
     = 100-(200*300)-500+20
     = 100-60000-(500+20)
     = (100-60000)-520
     = (-59900-520)
     = -60420
+    연산자 최대 개수 n/2, 연산자 탐색 n, 탐색 후 연산한 뒤 피연산자 리스트 정리 n. 우선 순위 경우의 수 3! -> n/2 * n * n * 3! = 3 * n^3 = 3000000
+    3 <= n <= 100
+    1 - 2 * 3 * 4 + 5
 
 
     "50*6-3*2"	300 // - > * 연산자 우선순위를 정한다면 50*(6-3)*2
@@ -78,7 +82,7 @@ public class MaximizedExpressionTest {
 
             for (int pCase = 0; pCase < cases.length; pCase++) {
                 setPriority(cases, priorities, pCase);
-                // 연산자 i, i+1 비교 후 i가 우선순위에서 더 큰 경우 i+1 연산자 좌우 피연산자에 대해 연산
+                // 연산자 우선순위가 높은 것부터 순차적으로 계산
                 for (int operationIndex = 0; operationIndex < operations.size() - 1; operationIndex++) {
                     for (int comparedIndex = operationIndex + 1; comparedIndex < operations.size(); comparedIndex++) {
 
