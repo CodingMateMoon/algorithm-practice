@@ -22,6 +22,9 @@ public class MaximizedExpressionTest {
     연산자 최대 개수 n/2, 연산자 탐색 n, 탐색 후 연산한 뒤 피연산자 리스트 정리 n. 우선 순위 경우의 수 3! -> n/2 * n * n * 3! = 3 * n^3 = 3000000
     3 <= n <= 100
     1 - 2 * 3 * 4 + 5
+    0   1   2   3   4
+      0   1   2   3
+
 
 
     "50*6-3*2"	300 // - > * 연산자 우선순위를 정한다면 50*(6-3)*2
@@ -32,12 +35,12 @@ public class MaximizedExpressionTest {
     char[] operations = {'-', '*', '-', '+'}
     * + -
     우선 순위 3!에 대해 각각 계산
-    0 1 2
-    0 2 1
-    1 0 2
-    1 2 0
-    2 0 1
-    2 1 0
+    * + -
+    * - +
+    + * -
+    + - *
+    - * +
+    - + *
 
     int[] priorities = {0, 1, 2}
     0번째 연산자 -, 1번째 연산자 * 중 우선 순위
@@ -56,7 +59,7 @@ public class MaximizedExpressionTest {
 
     private static class MaximizedExpression {
 
-        static final int[][] cases = {{0, 1, 2}, {0, 2, 1}, {1, 0, 2}, {1, 2, 0}, {2, 0, 1}, {2, 1, 0}};
+        static final char[][] cases = {{'*', '+', '-'}, {'*', '-', '+'}, {'+','*', '-'}, {'+', '-', '*'}, {'-', '*', '+'}, {'-', '+', '*'}};
         public static long solution(String s) {
             List<String> operands = new ArrayList<>();
             List<Character> operations = new ArrayList<>();
@@ -81,13 +84,7 @@ public class MaximizedExpressionTest {
             operands.add(s.substring(endOffset));
 
             for (int pCase = 0; pCase < cases.length; pCase++) {
-                setPriority(cases, priorities, pCase);
-                // 연산자 우선순위가 높은 것부터 순차적으로 계산
-                for (int operationIndex = 0; operationIndex < operations.size() - 1; operationIndex++) {
-                    for (int comparedIndex = operationIndex + 1; comparedIndex < operations.size(); comparedIndex++) {
-
-                    }
-                }
+                
             }
 
             return 0;
