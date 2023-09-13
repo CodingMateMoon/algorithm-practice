@@ -24,6 +24,7 @@ public class MaximizedExpressionTest {
     1 - 2 * 3 * 4 + 5
     0   1   2   3   4
       0   1   2   3
+     i + 1 에 연산 결과값을 저장하고 remove(i)
 
 
 
@@ -61,7 +62,7 @@ public class MaximizedExpressionTest {
 
         static final char[][] cases = {{'*', '+', '-'}, {'*', '-', '+'}, {'+','*', '-'}, {'+', '-', '*'}, {'-', '*', '+'}, {'-', '+', '*'}};
         public static long solution(String s) {
-            List<String> operands = new ArrayList<>();
+            List<Integer> operands = new ArrayList<>();
             List<Character> operations = new ArrayList<>();
 
             Map<Character, Integer> priorities = new HashMap<>();
@@ -71,24 +72,52 @@ public class MaximizedExpressionTest {
                 if (c == '*' || c == '+' || c == '-') {
                     if (endOffset < 0) {
 
-                        operands.add(s.substring(0, i));
+                        operands.add(Integer.parseInt(s.substring(0, i)));
                         operations.add(c);
                         endOffset = i + 1;
                         continue;
                     }
-                    operands.add(s.substring(endOffset, i));
+                    operands.add(Integer.parseInt(s.substring(endOffset, i)));
                     operations.add(c);
                     endOffset = i + 1;
                 }
             }
-            operands.add(s.substring(endOffset));
+            operands.add(Integer.parseInt(s.substring(endOffset)));
 
+            /*
+            "100-200*300-500+20"	60420 // * > + > - 로 연산자 우선순위를 정한다면 수식의 결괏값은 -60420
+            피연산자 5개, 연산자 4개
+            = 100-(200*300)-500+20
+            = 100-60000-(500+20)
+            = (100-60000)-520
+            = (-59900-520)
+            = -60420
+            연산자 최대 개수 n/2, 연산자 탐색 n, 탐색 후 연산한 뒤 피연산자 리스트 정리 n. 우선 순위 경우의 수 3! -> n/2 * n * n * 3! = 3 * n^3 = 3000000
+            3 <= n <= 100
+            1 - 2 * 3 * 4 + 5
+            0   1   2   3   4
+              0   1   2   3
+            operands 요소 i + 1 에 연산 결과값을 저장하고 remove(i)
+            해당 operationOffset에 해당하는 operation 요소 remove
+             */
+            int max = Integer.MIN_VALUE;
             for (int pCase = 0; pCase < cases.length; pCase++) {
-                
+                List<Integer> caseOperands = new ArrayList<>(operands);
+                List<Character> caseOperations = new ArrayList<>(operations);
+                for (int element = 0; element < 3; element++) {
+                    for (int operationOffset = 0; operationOffset < caseOperations.size(); operationOffset++) {
+                        char c = cases[pCase][element];
+                        if (c == caseOperations.get(operationOffset)) {
+                            int tempResult = caseOperands.get(operationOffset) + caseOperations.get(operationOffset + 1);
+                        }
+                    }
+                }
             }
 
             return 0;
         }
+
+
 
         private static void setPriority(int[][] cases, Map<Character, Integer> priorities, int pCase) {
             for (int element = 0; element < 3; element++) {
