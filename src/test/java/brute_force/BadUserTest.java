@@ -13,13 +13,32 @@ public class BadUserTest {
     1 <= banned_id.length <= user_id.length
     1 <= banned_id[i] : 소문자, 숫자, *로 구성. 최소 * 1개 이상, 응모자 아이디 1개와 매핑. 중복 매핑 X <= 8
     제재 아이디 목록 조합(나열 순서 상관X)
+    user_id와 banned_id를 비교할 때 *는 continue, 각 자리수와 문자가 일치하는 경우를 찾습니다
 
      */
     @Test
     @DisplayName("BadUserTest")
     public void badUserTest() throws Exception{
+        /* frodo, abc123 | fradi, abc123
+        fr*d* -> frodo, fradi
+        abc1** -> abc123
+         */
         Assertions.assertThat(BadUser.solution(new String[]{"frodo", "fradi", "crodo", "abc123", "frodoc"}, new String[]{"fr*d*", "abc1**"})).isEqualTo(2);
+        /* frodo, crodo, abc123 | frodo, crodo, frodoc
+         *rodo-> frodo, crodo
+         *rodo-> frodo, crodo
+         ******-> abc123, frodoc
+         1 : 응모자 아이디 목록에서 불량사용자1과 매핑되는 요소 1개 선택
+         2 : 1번에서 제외하고 남은 응모자 아이디 목록 중 불량사용자2와 매핑되는 요소 1개 선택
+         3 : 1,2에서 제외하고 남은 응모자 아이디 목록 중 불량사용자3과 매핑되는 요소 1개 선택
+         => 재귀 for문 활용 고려
+         */
         Assertions.assertThat(BadUser.solution(new String[]{"frodo", "fradi", "crodo", "abc123", "frodoc"}, new String[]{"*rodo", "*rodo", "******"})).isEqualTo(2);
+        /* frodo, crodo, abc123, frodoc | fradi, crodo, abc123, frodoc | fradi, frodo, abc123, frodoc
+        fr*d*-> frodo, fradi
+        *rodo-> frodo, crodo
+        ******-> abc123, frodoc
+         */
         Assertions.assertThat(BadUser.solution(new String[]{"frodo", "fradi", "crodo", "abc123", "frodoc"}, new String[]{"fr*d*", "*rodo", "******", "******"})).isEqualTo(3);
     }
 
