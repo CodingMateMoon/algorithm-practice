@@ -4,6 +4,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 public class BadUserTest {
 
     // https://school.programmers.co.kr/learn/courses/30/lessons/64064
@@ -24,11 +26,11 @@ public class BadUserTest {
         abc1** -> abc123
          */
         Assertions.assertThat(BadUser.solution(new String[]{"frodo", "fradi", "crodo", "abc123", "frodoc"}, new String[]{"fr*d*", "abc1**"})).isEqualTo(2);
-        /* frodo, crodo, abc123 | frodo, crodo, frodoc
+        /* case 2: frodo, crodo, abc123 | frodo, crodo, frodoc
          *rodo-> frodo, crodo
          *rodo-> frodo, crodo
          ******-> abc123, frodoc
-         1 : 응모자 아이디 목록에서 불량사용자1과 매핑되는 요소 1개 선택
+         1 : 응모자 아이디 목록에서 불량사용자1과 매핑되는 요소 1개 선택. 응모자 아이디 isSelected = true
          2 : 1번에서 제외하고 남은 응모자 아이디 목록 중 불량사용자2와 매핑되는 요소 1개 선택
          3 : 1,2에서 제외하고 남은 응모자 아이디 목록 중 불량사용자3과 매핑되는 요소 1개 선택
          => 재귀 for문 활용 고려
@@ -43,8 +45,28 @@ public class BadUserTest {
     }
 
     private static class BadUser {
-        public static int solution(String[] user_id, String[] banned_id) {
+        public static int solution(String[] userIds, String[] bannedIds) {
+
+            Boolean[] isSelected = new Boolean[userIds.length];
+
+            List<String> badUsers = getBadUser(userIds, bannedIds, isSelected);
             return 0;
+        }
+
+        private static List<String> getBadUser(String[] userIds, String[] bannedIds, Boolean[] isSelected) {
+            for (int userIdIndex = 0; userIdIndex < userIds.length; userIdIndex++) {
+                char[] charUserId = userIds[userIdIndex].toCharArray();
+                char[] charBannedId = bannedIds[userIdIndex].toCharArray();
+                boolean isBadUser = true;
+                for (int cUserIdIndex = 0; cUserIdIndex < charUserId.length; cUserIdIndex++) {
+                    if (charUserId[cUserIdIndex] != charBannedId[cUserIdIndex]) {
+                        isBadUser = false;
+                        break;
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }
