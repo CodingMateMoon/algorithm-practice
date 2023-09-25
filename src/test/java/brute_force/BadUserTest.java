@@ -35,6 +35,9 @@ public class BadUserTest {
          2 : 1번에서 제외하고 남은 응모자 아이디 목록 중 불량사용자2와 매핑되는 요소 1개 선택
          3 : 1,2에서 제외하고 남은 응모자 아이디 목록 중 불량사용자3과 매핑되는 요소 1개 선택
          => 재귀 for문 활용 고려
+         비트 연산 경우의 수 구하기?
+         10110(frodo:true, crodo:true, abc123:true)
+         10101(frodo:true, crodo:true, frodoc:true)
          */
         Assertions.assertThat(BadUser.solution(new String[]{"frodo", "fradi", "crodo", "abc123", "frodoc"}, new String[]{"*rodo", "*rodo", "******"})).isEqualTo(2);
         /* frodo, crodo, abc123, frodoc | fradi, crodo, abc123, frodoc | fradi, frodo, abc123, frodoc
@@ -55,7 +58,11 @@ public class BadUserTest {
         }
 
         private static List<String> getBadUser(String[] userIds, String[] bannedIds, Boolean[] isSelected, List<String> badUsers) {
+
             for (int userIdOffset = 0; userIdOffset < userIds.length; userIdOffset++) {
+                if (isSelected[userIdOffset]) {
+                    continue;
+                }
                 char[] charUserId = userIds[userIdOffset].toCharArray();
                 char[] charBannedId = bannedIds[userIdOffset].toCharArray();
                 boolean isBadUser = true;
