@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BadUserTest {
@@ -49,20 +50,24 @@ public class BadUserTest {
 
             Boolean[] isSelected = new Boolean[userIds.length];
 
-            List<String> badUsers = getBadUser(userIds, bannedIds, isSelected);
+            List<String> badUsers = getBadUser(userIds, bannedIds, isSelected, new ArrayList<String>());
             return 0;
         }
 
-        private static List<String> getBadUser(String[] userIds, String[] bannedIds, Boolean[] isSelected) {
-            for (int userIdIndex = 0; userIdIndex < userIds.length; userIdIndex++) {
-                char[] charUserId = userIds[userIdIndex].toCharArray();
-                char[] charBannedId = bannedIds[userIdIndex].toCharArray();
+        private static List<String> getBadUser(String[] userIds, String[] bannedIds, Boolean[] isSelected, List<String> badUsers) {
+            for (int userIdOffset = 0; userIdOffset < userIds.length; userIdOffset++) {
+                char[] charUserId = userIds[userIdOffset].toCharArray();
+                char[] charBannedId = bannedIds[userIdOffset].toCharArray();
                 boolean isBadUser = true;
-                for (int cUserIdIndex = 0; cUserIdIndex < charUserId.length; cUserIdIndex++) {
-                    if (charUserId[cUserIdIndex] != charBannedId[cUserIdIndex]) {
+                for (int cUserIdOffset = 0; cUserIdOffset < charUserId.length; cUserIdOffset++) {
+                    if (charUserId[cUserIdOffset] != charBannedId[cUserIdOffset]) {
                         isBadUser = false;
                         break;
                     }
+                }
+                if (isBadUser) {
+                    badUsers.add(userIds[userIdOffset]);
+                    isSelected[userIdOffset] = true;
                 }
             }
 
