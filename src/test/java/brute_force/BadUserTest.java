@@ -4,8 +4,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class BadUserTest {
 
@@ -26,34 +27,34 @@ public class BadUserTest {
         fr*d* -> frodo, fradi
         abc1** -> abc123
          */
-        //Assertions.assertThat(BadUser.solution(new String[]{"frodo", "fradi", "crodo", "abc123", "frodoc"}, new String[]{"fr*d*", "abc1**"})).isEqualTo(2);
+        Assertions.assertThat(BadUser.solution(new String[]{"frodo", "fradi", "crodo", "abc123", "frodoc"}, new String[]{"fr*d*", "abc1**"})).isEqualTo(2);
         Assertions.assertThat(BadUser.solution(new String[]{"frodo", "fradi", "crodo", "abc123", "frodoc"}, new String[]{"*rodo", "*rodo", "******"})).isEqualTo(2);
         /* frodo, crodo, abc123, frodoc | fradi, crodo, abc123, frodoc | fradi, frodo, abc123, frodoc
         fr*d*-> frodo, fradi
         *rodo-> frodo, crodo
         ******-> abc123, frodoc
          */
-        //Assertions.assertThat(BadUser.solution(new String[]{"frodo", "fradi", "crodo", "abc123", "frodoc"}, new String[]{"fr*d*", "*rodo", "******", "******"})).isEqualTo(3);
+        Assertions.assertThat(BadUser.solution(new String[]{"frodo", "fradi", "crodo", "abc123", "frodoc"}, new String[]{"fr*d*", "*rodo", "******", "******"})).isEqualTo(3);
     }
 
     private static class BadUser {
 
         static boolean[] isBannedIdSelected;
-        static int caseCount;
+
+        static Set<Set<String>> result;
 
         public static int solution(String[] userIds, String[] bannedIds) {
 
             boolean[] isUserIdSelected = new boolean[userIds.length];
             isBannedIdSelected = new boolean[bannedIds.length];
-            caseCount = 0;
+            result = new HashSet<>();
 
 
-            getBadUser(userIds, bannedIds, isUserIdSelected, new ArrayList<String>());
-            System.out.println("solution : " + caseCount);
-            return caseCount;
+            getBadUser(userIds, bannedIds, isUserIdSelected, new HashSet<>());
+            return result.size();
         }
 
-        private static void getBadUser(String[] userIds, String[] bannedIds, boolean[] isUserIdSelected, List<String> badUsers) {
+        private static void getBadUser(String[] userIds, String[] bannedIds, boolean[] isUserIdSelected, Set<String> badUsers) {
 
              /*
              Assertions.assertThat(BadUser.solution(new String[]{"frodo", "fradi", "crodo", "abc123", "frodoc"}, new String[]{"*rodo", "*rodo", "******"})).isEqualTo(2);
@@ -68,13 +69,11 @@ public class BadUserTest {
              비트 연산 경우의 수 구하기?
              10110(frodo:true, crodo:true, abc123:true)
              10101(frodo:true, crodo:true, frodoc:true)
-             불량사용자 기준 1,2,3 ~ 다 true일 때 print
+             불량사용자 기준 1,2,3 ~ 다 true일 때 print. 불량 사용자는 순차적으로 다 매핑되는 응모자 아이디가 있어야 합니다. 불량사용자 1 -> 응모자 아이디 1, 2, 3 재귀 호출 및 백트래킹. 다 돌고나서 매핑된 경우가 없으면 return. 불량 사용자 1은 매핑이 없는데 불량 사용자 2에서 매핑되는 경우를 막아야 합니다.
              */
 
             if (badUsers.size() == bannedIds.length) {
-                System.out.println("completed : " + badUsers);
-                caseCount++;
-                System.out.println("caseCount : " + caseCount);
+                result.add(new HashSet<>(badUsers));
                 return;
             }
 
@@ -85,6 +84,7 @@ public class BadUserTest {
                 }
 
 
+                boolean isMapping = false;
                 for (int userIdOffset = 0; userIdOffset < userIds.length; userIdOffset++) {
                     if (isUserIdSelected[userIdOffset]) {
                         continue;
@@ -104,27 +104,28 @@ public class BadUserTest {
 
                         if (charBannedId[charBannedIdOffset] != charUserId[charBannedIdOffset]) {
                             isSame = false;
-                            System.out.println("(userId : " + userIdOffset + ") / (bannedId : " + bannedIdOffset + ") / " + userIds[userIdOffset] + " : " + bannedIds[bannedIdOffset]);
                         }
                     }
 
                     if (isSame) {
                         isBannedIdSelected[bannedIdOffset] = true;
                         isUserIdSelected[userIdOffset] = true;
-                        System.out.println(bannedIdOffset + " : " + userIds[userIdOffset] + " : " + bannedIds[bannedIdOffset]);
                         badUsers.add(userIds[userIdOffset]);
-                        System.out.println(badUsers);
 
                         getBadUser(userIds, bannedIds, isUserIdSelected, badUsers);
                         isBannedIdSelected[bannedIdOffset] = false;
+                        isMapping = false;
                         badUsers.remove(userIds[userIdOffset]);
                         isUserIdSelected[userIdOffset] = false;
-                    } else {
-                        return;
                     }
+                }
+                if (!isMapping) {
+                    return;
                 }
 
             }
         }
+
+
     }
 }
