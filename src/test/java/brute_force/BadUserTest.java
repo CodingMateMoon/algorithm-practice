@@ -45,16 +45,44 @@ public class BadUserTest {
 
         public static int solution(String[] userIds, String[] bannedIds) {
 
+            result = new HashSet<>();
+
+            String[][] bannedArray = Arrays.stream(bannedIds).map(bannedId -> bannedId.replace("*", "."))
+                    .map(bannedId -> Arrays.stream(userIds).filter(userId -> userId.matches(bannedId)).toArray(String[]::new))
+                    .toArray(String[][]::new);
+
+            getBadUser(0, bannedArray, new HashSet<>());
+            return result.size();
+        }
+
+        private static void getBadUser(int index, String[][] bannedArray, Set<String> sBannedIds) {
+            if (index == bannedArray.length) {
+                result.add(new HashSet<>(sBannedIds));
+                return;
+            }
+
+            for (String bannedId : bannedArray[index]) {
+                if (sBannedIds.contains(bannedId)) {
+                    continue;
+                }
+                sBannedIds.add(bannedId);
+                getBadUser(index + 1, bannedArray, sBannedIds);
+                sBannedIds.remove(bannedId);
+            }
+        }
+
+        public static int solution_1(String[] userIds, String[] bannedIds) {
+
             boolean[] isUserIdSelected = new boolean[userIds.length];
             isBannedIdSelected = new boolean[bannedIds.length];
             result = new HashSet<>();
 
 
-            getBadUser(userIds, bannedIds, isUserIdSelected, new HashSet<>());
+            getBadUser_1(userIds, bannedIds, isUserIdSelected, new HashSet<>());
             return result.size();
         }
 
-        private static void getBadUser(String[] userIds, String[] bannedIds, boolean[] isUserIdSelected, Set<String> badUsers) {
+        private static void getBadUser_1(String[] userIds, String[] bannedIds, boolean[] isUserIdSelected, Set<String> badUsers) {
 
              /*
              Assertions.assertThat(BadUser.solution(new String[]{"frodo", "fradi", "crodo", "abc123", "frodoc"}, new String[]{"*rodo", "*rodo", "******"})).isEqualTo(2);
@@ -112,7 +140,7 @@ public class BadUserTest {
                         isUserIdSelected[userIdOffset] = true;
                         badUsers.add(userIds[userIdOffset]);
 
-                        getBadUser(userIds, bannedIds, isUserIdSelected, badUsers);
+                        getBadUser_1(userIds, bannedIds, isUserIdSelected, badUsers);
                         isBannedIdSelected[bannedIdOffset] = false;
                         isMapping = false;
                         badUsers.remove(userIds[userIdOffset]);
