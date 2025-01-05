@@ -34,7 +34,7 @@ Constraints:
 -109 <= target <= 109
 Only one valid answer exists.
      */
-    public int[] twoSum(int[] nums, int target) {
+    public int[] twoSum_1(int[] nums, int target) {
         int left = 0, right = nums.length - 1;
 
         while (left < right) {
@@ -47,6 +47,17 @@ Only one valid answer exists.
             }
             else if (nums[left] + nums[right] > target) {
                 right--;
+            }
+        }
+        return new int[]{};
+    }
+    public int[] twoSum(int[] nums, int target) {
+
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+               if (nums[i] + nums[j] == target) {
+                   return new int[]{i, j};
+               }
             }
         }
         return new int[]{};
