@@ -1,5 +1,3 @@
-import java.util.HashMap;
-
 // https://leetcode.com/problems/is-subsequence/
 /*
 
@@ -27,16 +25,38 @@ Constraints:
 s and t consist only of lowercase English letters.
 
 s의 요소가 순서대로 t의 요소에 매핑되는 것이 있는지 확인. O(n^2) 의 경우 100^104으로 값이 커서 불가.
-a, h 등 값을 키, index를 value로 저장하는 hash 생성 후 key가 존재하고 key에 매핑되는 index 위치기 이전 index 위치보다 클 경우
-a b c
+a, h 등 값을 키, index를 value로 저장하는 hash 생성 후 key가 존재하고 key에 매핑되는 index 위치가 이전 index보다 클 경우
+s의 각 요소를 가리키는 포인터와 t의 각 요소를 가리키는 포인터를 통해 요소들을 비교하고 s의 요소가 t의 요소에 속하면 각 포인터들을 하나씩 증가시키기
  */
 public class IsSubsequence {
     public boolean isSubsequence(String s, String t) {
 
+        int s_index = 0;
+        int t_index = 0;
+        while(s_index < s.length() && t_index < t.length()) {
+            if(s.charAt(s_index) == t.charAt(t_index)) {
+                s_index++;
+                t_index++;
+                continue;
+            }
+            t_index++;
+        }
+        return s_index == s.length();
+
+        /*
+        HashMap<Character, Integer> map = new HashMap<>();
         for (int i = 0; i < t.length(); i++) {
-            HashMap<Character, Integer> map = new HashMap<>();
             map.put(t.charAt(i), i);
         }
 
+        int index = -1;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (!map.containsKey(c) || map.get(c) < index)
+                return false;
+            index = map.get(c);
+        }
+        return true;
+         */
     }
 }
