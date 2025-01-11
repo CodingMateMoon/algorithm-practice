@@ -29,34 +29,42 @@ a, h 등 값을 키, index를 value로 저장하는 hash 생성 후 key가 존�
 s의 각 요소를 가리키는 포인터와 t의 각 요소를 가리키는 포인터를 통해 요소들을 비교하고 s의 요소가 t의 요소에 속하면 각 포인터들을 하나씩 증가시키기
  */
 public class IsSubsequence {
-    public boolean isSubsequence(String s, String t) {
+
+    String source, target;
+    int s_length, t_length;
+
+    public boolean isSubsequence_1(String s, String t) {
 
         int s_index = 0;
         int t_index = 0;
         while(s_index < s.length() && t_index < t.length()) {
             if(s.charAt(s_index) == t.charAt(t_index)) {
                 s_index++;
-                t_index++;
-                continue;
             }
             t_index++;
         }
         return s_index == s.length();
+    }
+    public boolean isSubsequence(String s, String t) {
+        this.source = s;
+        this.target = t;
+        this.s_length = s.length();
+        this.t_length = t.length();
+        return rec_isSubsequence(0, 0);
+    }
 
-        /*
-        HashMap<Character, Integer> map = new HashMap<>();
-        for (int i = 0; i < t.length(); i++) {
-            map.put(t.charAt(i), i);
+    public boolean rec_isSubsequence(int s_index, int t_index) {
+        if (s_index == this.s_length) {
+            return true;
+        }
+        if (t_index == this.t_length) {
+            return false;
         }
 
-        int index = -1;
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (!map.containsKey(c) || map.get(c) < index)
-                return false;
-            index = map.get(c);
+        if (source.charAt(s_index) == target.charAt(t_index)) {
+            s_index++;
         }
-        return true;
-         */
+        t_index++;
+        return rec_isSubsequence(s_index, t_index);
     }
 }
