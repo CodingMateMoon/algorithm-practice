@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.List;
+
 // https://leetcode.com/problems/is-subsequence/
 /*
 
@@ -68,7 +71,7 @@ public class IsSubsequence {
         return rec_isSubsequence(s_index, t_index);
     }
 
-    public boolean isSubsequence(String s, String t) {
+    public boolean isSubsequence_3(String s, String t) {
         Integer leftBound = s.length(), rightBound = t.length();
         Integer pLeft = 0, pRight = 0;
 
@@ -80,5 +83,8 @@ public class IsSubsequence {
             pRight += 1;
         }
         return pLeft == leftBound;
+    }
+    public boolean isSubsequence(String s, String t) {
+        HashMap<Character, List<Integer>> letterIndicesTable = new HashMap<>();
     }
 }
