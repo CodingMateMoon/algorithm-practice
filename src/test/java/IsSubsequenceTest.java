@@ -12,5 +12,4 @@ class IsSubsequenceTest {
         Assertions.assertFalse(isSubsequence.isSubsequence("axc", "ahbgdc"));
         Assertions.assertFalse(isSubsequence.isSubsequence("aaaaaa", "bbaaaa"));
     }
-
 }
