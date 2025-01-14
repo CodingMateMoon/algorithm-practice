@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -86,5 +87,14 @@ public class IsSubsequence {
     }
     public boolean isSubsequence(String s, String t) {
         HashMap<Character, List<Integer>> letterIndicesTable = new HashMap<>();
+        for (int i = 0; i < t.length(); i++) {
+            if (letterIndicesTable.containsKey(t.charAt(i))) {
+                letterIndicesTable.get(t.charAt(i)).add(i);
+            } else {
+                ArrayList<Integer> indices = new ArrayList<>();
+                indices.add(i);
+                letterIndicesTable.put(t.charAt(i), indices);
+            }
+        }
     }
 }
