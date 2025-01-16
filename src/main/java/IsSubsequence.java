@@ -96,5 +96,7 @@ public class IsSubsequence {
                 letterIndicesTable.put(t.charAt(i), indices);
             }
         }
+
+        Integer currentMatchIndex = -1;
     }
 }
