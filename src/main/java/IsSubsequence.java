@@ -103,7 +103,18 @@ public class IsSubsequence {
             if (!letterIndicesTable.containsKey(s.charAt(i))) {
                 return false;
             }
-            
+            boolean isMatch = false;
+            for (Integer index : letterIndicesTable.get(s.charAt(i))) {
+                if (currentMatchIndex < index) {
+                    currentMatchIndex = index;
+                    isMatch = true;
+                    break;
+                }
+            }
+            if (!isMatch) {
+                return false;
+            }
         }
+        return true;
     }
 }
