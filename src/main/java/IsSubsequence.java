@@ -97,6 +97,13 @@ public class IsSubsequence {
             }
         }
 
+        // 소스 문자열 요소 순회 중 일치하는게 없으면 false 모든 요소가 일치하는게 있으면 true
         Integer currentMatchIndex = -1;
+        for (int i = 0; i < s.length(); i++) {
+            if (!letterIndicesTable.containsKey(s.charAt(i))) {
+                return false;
+            }
+            
+        }
     }
 }
