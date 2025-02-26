@@ -27,5 +27,20 @@ public class EditDistance {
     public int minDistance(String word1, String word2) {
 
     }
+
+    int recur(String word1, String word2, int word1Length, int word2Length) {
+
+        if (word1 == null) {
+            return word2Length;
+        }
+        if (word2 == null) {
+            return word1Length;
+        }
+        if (word1.charAt(word1Length - 1) == word2.charAt(word2Length - 1)) {
+            return recur(word1, word2, word1Length - 1, word2Length - 1);
+        } else {
+
+        }
+    }
 }
 
