@@ -25,21 +25,25 @@ exection -> execution (insert 'u')
 public class EditDistance {
 
     public int minDistance(String word1, String word2) {
-
+        return recur(word1, word2, word1.length(), word2.length());
     }
 
     int recur(String word1, String word2, int word1Length, int word2Length) {
 
-        if (word1 == null) {
+        if (word1Length == 0) {
             return word2Length;
         }
-        if (word2 == null) {
+        if (word2Length == 0) {
             return word1Length;
         }
         if (word1.charAt(word1Length - 1) == word2.charAt(word2Length - 1)) {
             return recur(word1, word2, word1Length - 1, word2Length - 1);
         } else {
+            int removeOperation = recur(word1, word2, word1Length - 1, word2Length);
+            int insertOperation = recur(word1, word2, word1Length, word2Length - 1);
+            int replaceOperation = recur(word1, word2, word1Length - 1, word2Length - 1);
 
+            return (Math.min(removeOperation, Math.min(insertOperation, replaceOperation)) + 1);
         }
     }
 }
