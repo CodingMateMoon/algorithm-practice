@@ -24,7 +24,10 @@ exection -> execution (insert 'u')
  */
 public class EditDistance {
 
+    int memo[][];
+
     public int minDistance(String word1, String word2) {
+        memo = new int[word1.length() + 1][word2.length() + 1];
         return recur(word1, word2, word1.length(), word2.length());
     }
 
@@ -36,6 +39,10 @@ public class EditDistance {
         if (word2Length == 0) {
             return word1Length;
         }
+        if (memo[word1Length][word2Length] != 0) {
+            return memo[word1Length][word2Length];
+        }
+        int minDistance = 0;
         if (word1.charAt(word1Length - 1) == word2.charAt(word2Length - 1)) {
             return recur(word1, word2, word1Length - 1, word2Length - 1);
         } else {
@@ -43,7 +50,9 @@ public class EditDistance {
             int insertOperation = recur(word1, word2, word1Length, word2Length - 1);
             int replaceOperation = recur(word1, word2, word1Length - 1, word2Length - 1);
 
-            return (Math.min(removeOperation, Math.min(insertOperation, replaceOperation)) + 1);
+            minDistance = (Math.min(removeOperation, Math.min(insertOperation, replaceOperation)) + 1);
+            memo[word1Length][word2Length] = minDistance;
+            return minDistance;
         }
     }
 }
