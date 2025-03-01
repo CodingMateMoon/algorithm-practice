@@ -26,7 +26,7 @@ public class EditDistance {
 
     int memo[][];
 
-    public int minDistance(String word1, String word2) {
+    public int minDistance_1(String word1, String word2) {
         memo = new int[word1.length() + 1][word2.length() + 1];
         return recur(word1, word2, word1.length(), word2.length());
     }
@@ -54,6 +54,11 @@ public class EditDistance {
             memo[word1Length][word2Length] = minDistance;
             return minDistance;
         }
+    }
+
+    public int minDistance(String word1, String word2) {
+       int word1Length = word1.length();
+       int word2Length = word2.length();
     }
 }
 
