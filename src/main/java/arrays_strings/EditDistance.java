@@ -75,6 +75,18 @@ public class EditDistance {
        for (int word2Index = 1; word2Index <= word2Length; word2Index++) {
            dp[0][word2Index] = word2Index;
        }
+
+       for (int word1Index = 1; word1Index <= word1Length; word1Index++) {
+           for (int word2Index = 1; word2Index <= word2Length; word2Index++) {
+               if (word1.charAt(word1Index - 1) == word2.charAt(word2Index - 1)) {
+                   dp[word1Index][word2Index] = dp[word1Index - 1][word2Index - 1];
+               } else {
+
+               }
+           }
+       }
+
+
     }
 }
 
