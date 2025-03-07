@@ -81,12 +81,11 @@ public class EditDistance {
                if (word1.charAt(word1Index - 1) == word2.charAt(word2Index - 1)) {
                    dp[word1Index][word2Index] = dp[word1Index - 1][word2Index - 1];
                } else {
-
+                   dp[word1Index][word2Index] = Math.min(dp[word1Index - 1][word2Index], Math.min(dp[word1Index][word2Index - 1],dp[word1Index - 1][word2Index -1] )) + 1;
                }
            }
        }
-
-
+       return dp[word1Length][word2Length];
     }
 }
 
