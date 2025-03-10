@@ -85,7 +85,7 @@ public class IsSubsequence {
         }
         return pLeft == leftBound;
     }
-    public boolean isSubsequence(String s, String t) {
+    public boolean isSubsequence_4(String s, String t) {
         HashMap<Character, List<Integer>> letterIndicesTable = new HashMap<>();
         for (int i = 0; i < t.length(); i++) {
             if (letterIndicesTable.containsKey(t.charAt(i))) {
@@ -116,5 +116,12 @@ public class IsSubsequence {
             }
         }
         return true;
+    }
+    public boolean isSubsequence(String s, String t) {
+
+        Integer sourceLen = s.length(), targetLen = t.length();
+        // the source string is empty
+        if (sourceLen == 0)
+            return true;
     }
 }
