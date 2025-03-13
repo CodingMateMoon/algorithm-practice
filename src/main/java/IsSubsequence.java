@@ -123,5 +123,21 @@ public class IsSubsequence {
         // the source string is empty
         if (sourceLen == 0)
             return true;
+
+        int dp[][] = new int[sourceLen + 1][targetLen + 1];
+
+        for (int col = 1; col <= targetLen; col++) {
+            for (int row = 1; row <=sourceLen; row++) {
+                if (s.charAt(row - 1) == t.charAt(col - 1)) {
+                    dp[row][col] = dp[row-1][col-1] + 1;
+                } else {
+                    dp[row][col] = Math.max(dp[row - 1][col], dp[row][col-1]);
+                }
+            }
+            if (dp[sourceLen][col] == sourceLen) {
+                return true;
+            }
+        }
+        return false;
     }
 }
