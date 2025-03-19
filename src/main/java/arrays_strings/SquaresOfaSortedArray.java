@@ -26,8 +26,10 @@ Constraints:
 nums is sorted in non-decreasing order.
  */
 
+import java.util.Arrays;
+
 public class SquaresOfaSortedArray {
-    public int[] sortedSquares(int[] nums) {
+    public int[] sortedSquares_1(int[] nums) {
         int[] result = new int[nums.length];
         for (int i = 0; i < nums.length; i++) {
             result[i] = nums[i] * nums[i];
@@ -42,6 +44,15 @@ public class SquaresOfaSortedArray {
                }
             }
         }
+        return result;
+    }
+    public int[] sortedSquares(int[] nums) {
+
+        int[] result = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            result[i] = nums[i] * nums[i];
+        }
+        Arrays.sort(result);
         return result;
     }
 }
