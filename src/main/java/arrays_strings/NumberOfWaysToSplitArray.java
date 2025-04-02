@@ -53,7 +53,7 @@ Constraints:
 10^5 * 10^5 = 10^10  => 100억 이상. int 최대 범위 2^32 = (2^10)^3 * 4 = 10^9 * 4 = 40억을 초과.
 */
 public class NumberOfWaysToSplitArray {
-    public int waysToSplitArray(int[] nums) {
+    public int waysToSplitArray_1(int[] nums) {
         int n = nums.length;
         long[] sums = new long[n];
         sums[0] = nums[0];
@@ -65,6 +65,25 @@ public class NumberOfWaysToSplitArray {
 
         for (int i = 0; i < n - 1; i++) {
             if (sums[i] >= (sums[n - 1] - sums[i])) {
+                result++;
+            }
+        }
+        return result;
+    }
+    public int waysToSplitArray(int[] nums) {
+        long leftSum, rightSum;
+        leftSum = rightSum = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            rightSum += nums[i];
+        }
+
+        int result = 0;
+        for (int i = 0; i < nums.length - 1; i++) {
+            leftSum += nums[i];
+            rightSum -= nums[i];
+
+            if (leftSum >= rightSum) {
                 result++;
             }
         }
