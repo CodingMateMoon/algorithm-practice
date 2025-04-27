@@ -31,7 +31,7 @@ Constraints:
  */
 
 public class RunningSumOf1dArray {
-    public int[] runningSum(int[] nums) {
+    public int[] runningSum_1(int[] nums) {
 
         int[] sums = new int[nums.length];
         sums[0] = nums[0];
@@ -39,5 +39,11 @@ public class RunningSumOf1dArray {
             sums[i] = sums[i - 1] + nums[i];
         }
         return sums;
+    }
+    public int[] runningSum(int[] nums) {
+        for (int i = 1; i < nums.length; i++) {
+            nums[i] += nums[i - 1];
+        }
+        return nums;
     }
 }
